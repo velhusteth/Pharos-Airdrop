@@ -1,8 +1,8 @@
 **Script farm airdrop Pharos, bao gồm làm nhiệm vụ:**
 
-1. Faucet token STT
-2. Gửi
-3. Swap PHAROS -> USDT/USDC
+✅ Faucet Token PHRS
+✅ Gửi Token Đi Random Địa Chỉ Nào Đó
+✅ Swap PHAROS -> USDT/USDC
 
 ## Cách chạy code
 

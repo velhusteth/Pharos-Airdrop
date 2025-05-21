@@ -8,7 +8,36 @@
 
 1. Thêm thông tin ví và proxy vào file config.ts
 
-2. Cài đặt thư viện cần thiết
+## Farm nhiều ví
+
+Chỉnh sửa lại file app/config.ts
+
+```
+export const sleep = (millis: number) => {
+  return new Promise((resolve) => setTimeout(resolve, millis));
+};
+
+export const wallets = [
+  {
+    address1: "0xYourWalletAddressHere",
+    private1: "YourPrivateKeyHere",,
+    proxy: "", // bỏ trống nếu không có proxy
+  },
+  {
+    address1: "0xYourWalletAddressHere",
+    private1: "YourPrivateKeyHere",
+    proxy: "", // bỏ trống nếu không có proxy
+  },
+  {
+    address1: "0xAnotherWalletAddressHere",
+    private1: "AnotherPrivateKeyHere",
+    proxy: "", // bỏ trống nếu không có proxy
+  },
+];
+
+```
+
+3. Cài đặt thư viện cần thiết
 
 ```
 npm install
@@ -46,32 +75,4 @@ ts-node app/swap.ts
 
 ```
 
-## Farm nhiều ví
-
-Chỉnh sửa lại file app/config.ts
-
-```
-export const sleep = (millis: number) => {
-  return new Promise((resolve) => setTimeout(resolve, millis));
-};
-
-export const wallets = [
-  {
-    address1: "0xYourWalletAddressHere",
-    private1: "YourPrivateKeyHere",,
-    proxy: "", // bỏ trống nếu không có proxy
-  },
-  {
-    address1: "0xYourWalletAddressHere",
-    private1: "YourPrivateKeyHere",
-    proxy: "", // bỏ trống nếu không có proxy
-  },
-  {
-    address1: "0xAnotherWalletAddressHere",
-    private1: "AnotherPrivateKeyHere",
-    proxy: "", // bỏ trống nếu không có proxy
-  },
-];
-
-```
 Done!

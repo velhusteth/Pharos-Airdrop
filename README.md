@@ -37,7 +37,7 @@ export const wallets = [
 
 ```
 
-3. Cài đặt thư viện cần thiết
+2. Cài đặt thư viện cần thiết
 
 ```
 npm install

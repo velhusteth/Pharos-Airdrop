@@ -57,16 +57,20 @@ export const sleep = (millis: number) => {
 
 export const wallets = [
   {
-    address1: "0x2E44f42a1EfA47d332D2bF3be6d9c1F266133333",
+    address1: "0xCA2f0C5aEf4Df89a90DCb52561B5c7BbFF01A817",
     private1:
-      "cc62d4d55c1218e8385b9737cea68bc1160a76eb6fe36b3309bf162ee2da7810",
+      "7904bf4a14c044ac27207386eba220d2bf33fd962db48c75b81aad96a1d3a593",
     proxy: "", // bỏ trống nếu không có proxy
   },
   {
-    address1: "0xA3E9fbfF456273A760976f369E7e31D3BA533333",
-    private1:
-      "e7be2bf487fc2c1c49fda12de803d222861a01abd9e8305b156713d53adb6713",
-    proxy: "http://username:passs@host:port", // thêm proxy nếu có
+    address1: "0xYourWalletAddressHere",
+    private1: "YourPrivateKeyHere",
+    proxy: "", // bỏ trống nếu không có proxy
+  },
+  {
+    address1: "0xAnotherWalletAddressHere",
+    private1: "AnotherPrivateKeyHere",
+    proxy: "", // bỏ trống nếu không có proxy
   },
 ];
 

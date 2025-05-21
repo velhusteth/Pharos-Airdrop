@@ -1,9 +1,11 @@
 **Script farm airdrop Pharos, bao gồm làm nhiệm vụ:**
-
+`
 ✅ Faucet Token PHRS
-✅ Gửi Token Đi Random Địa Chỉ Nào Đó
-✅ Swap PHAROS -> USDT/USDC
 
+✅ Gửi Token Đi Random Địa Chỉ Nào Đó
+
+✅ Swap PHAROS -> USDT/USDC
+`
 ## Cách chạy code
 
 1. Thêm thông tin ví và proxy vào file config.ts

@@ -6,7 +6,7 @@ export const wallets = [
   {
     address1: "0xCA2f0C5aEf4Df89a90DCb52561B5c7BbFF01A817",
     private1:
-      "7904bf4a14c044ac27207386eba220d2bf33fd962db48c75b81aad96a1d3a593",
+      "Paste Private key vao day",
     proxy: "", // bỏ trống nếu không có proxy
   },
   {

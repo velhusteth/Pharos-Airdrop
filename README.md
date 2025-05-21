@@ -1,5 +1,11 @@
+Cộng đồng săn Airdrop: https://t.me/OneLabs_Channels
+
+Group chat: https://t.me/OneLabs_Home
+
+Telegram: @stewie0x
+
 **Script farm airdrop Pharos, bao gồm làm nhiệm vụ:**
-`
+
 
 ✅ Faucet Token PHRS
 
@@ -7,7 +13,7 @@
 
 ✅ Swap PHAROS -> USDT/USDC
 
-`
+
 ## Cách chạy code
 
 1. Thêm thông tin ví và proxy vào file config.ts

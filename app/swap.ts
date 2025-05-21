@@ -162,20 +162,26 @@ async function performSwap(
   }
 }
 
-async function claim() {
-  // Use only the first wallet
-  const { address1, private1 } = wallets[0];
-  console.log(`Using wallet: 0x...${address1.slice(-4)}`);
-  
+async function checkBalance(tokenAddress: string, address: string) {
+  const tokenContract = new web3.eth.Contract(ERC20_ABI, tokenAddress);
+  const balance = await tokenContract.methods.balanceOf(address).call();
+  return balance;
+}
+
+async function processWallet(address1: string, private1: string) {
+  let swaps = 0;
   while (true) {
     try {
       const contract = new web3.eth.Contract(SWAP_ABI, SWAP_CONTRACT);
       const _value = randomNumber();
-      const { tokenName, ctr_address } = randomToken();
       const value = web3.utils.toWei(_value, "ether");
-
-      // First swap: PHAROS -> USDC/USDT
-      console.log(`\nSwapping ${_value} PHAROS to ${tokenName}...`);
+      const pharosBalance = await checkBalance(PHAROS_TOKEN, address1);
+      if (BigInt(pharosBalance) < BigInt(value)) {
+        console.log(`Wallet 0x...${address1.slice(-4)}: Insufficient PHAROS balance. Stopping swaps for this wallet.`);
+        break;
+      }
+      const { tokenName, ctr_address } = randomToken();
+      console.log(`\nWallet 0x...${address1.slice(-4)}: Swapping ${_value} PHAROS to ${tokenName}...`);
       const firstSwapData = await performSwap(
         contract,
         PHAROS_TOKEN,
@@ -184,7 +190,6 @@ async function claim() {
         address1,
         private1
       );
-
       const gasPriceSupply = await web3.eth.getGasPrice();
       const gasEstimate = await web3.eth.estimateGas({
         from: address1,
@@ -192,7 +197,6 @@ async function claim() {
         data: firstSwapData,
         value,
       });
-
       const firstSwapPayload = {
         from: address1,
         to: SWAP_CONTRACT,
@@ -202,7 +206,6 @@ async function claim() {
         gasPrice: BigInt(Math.floor(Number(gasPriceSupply) * 2)),
         nonce: await web3.eth.getTransactionCount(address1),
       };
-
       const firstSwapTx = await web3.eth.accounts.signTransaction(
         firstSwapPayload,
         private1
@@ -213,12 +216,9 @@ async function claim() {
       console.log(
         `First swap successful tx: 0x...${firstSwapHash.transactionHash.slice(-8)}`
       );
-
-      // Wait for a random time between swaps
       await sleep(Math.floor(Math.random() * (10000 - 5000) + 5000));
-
-      // Second swap: USDC/USDT -> PHAROS
-      console.log(`Swapping back ${tokenName} to PHAROS...`);
+      // Swap back
+      console.log(`Wallet 0x...${address1.slice(-4)}: Swapping back ${tokenName} to PHAROS...`);
       const secondSwapData = await performSwap(
         contract,
         ctr_address,
@@ -227,14 +227,12 @@ async function claim() {
         address1,
         private1
       );
-
       const secondGasEstimate = await web3.eth.estimateGas({
         from: address1,
         to: SWAP_CONTRACT,
         data: secondSwapData,
-        value: "0", // No value needed for second swap
+        value: "0",
       });
-
       const secondSwapPayload = {
         from: address1,
         to: SWAP_CONTRACT,
@@ -244,7 +242,6 @@ async function claim() {
         gasPrice: BigInt(Math.floor(Number(gasPriceSupply) * 2)),
         nonce: await web3.eth.getTransactionCount(address1),
       };
-
       const secondSwapTx = await web3.eth.accounts.signTransaction(
         secondSwapPayload,
         private1
@@ -255,16 +252,25 @@ async function claim() {
       console.log(
         `Second swap successful tx: 0x...${secondSwapHash.transactionHash.slice(-8)}`
       );
-      console.log("Completed one back-and-forth swap cycle\n");
-      
-      // Wait before starting next cycle
+      console.log(`Wallet 0x...${address1.slice(-4)}: Completed one back-and-forth swap cycle\n`);
+      swaps++;
       await sleep(Math.floor(Math.random() * (10000 - 5000) + 5000));
     } catch (error) {
-      console.log("Error occurred:", error);
-      // Wait a bit longer after an error before retrying
+      console.log(`Wallet 0x...${address1.slice(-4)}: Error occurred:`, error);
       await sleep(15000);
     }
   }
+  return swaps;
+}
+
+async function claim() {
+  for (const wallet of wallets) {
+    if (!wallet.address1 || !wallet.private1) continue;
+    console.log(`\n=== Processing wallet: 0x...${wallet.address1.slice(-4)} ===`);
+    await processWallet(wallet.address1, wallet.private1);
+  }
+  console.log("\nAll wallets have insufficient PHAROS. Exiting script.");
+  process.exit(0);
 }
 
 claim();

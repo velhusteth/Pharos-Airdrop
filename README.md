@@ -50,6 +50,7 @@ ts-node app/swap.ts
 
 Chỉnh sửa lại file app/config.ts
 
+```
 export const sleep = (millis: number) => {
   return new Promise((resolve) => setTimeout(resolve, millis));
 };
@@ -69,4 +70,5 @@ export const wallets = [
   },
 ];
 
+```
 Done!
